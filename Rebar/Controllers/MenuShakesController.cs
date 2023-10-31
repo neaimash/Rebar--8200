@@ -27,11 +27,13 @@ public class MenuShakeController : ControllerBase
     [HttpGet("{id}")]
     public async Task<ActionResult<MenuShake>> Get(string id)
     {
-        if (!Guid.TryParse(id, out Guid guid))
+        // Parse the ID string to Guid for comparison
+        if (!Guid.TryParse(id, out Guid parsedId))
         {
-            return BadRequest("Invalid ID format.");
+            return BadRequest("Invalid ID format");
         }
-        var shake = await _context.MenuShakes.Find(p => p.ID == guid).FirstOrDefaultAsync();
+
+        var shake = await _context.MenuShakes.Find(p => p.ID == parsedId).FirstOrDefaultAsync();
 
         if (shake == null)
         {
@@ -51,18 +53,20 @@ public class MenuShakeController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(string id, MenuShake shakeIn)
     {
-        if (!Guid.TryParse(id, out Guid guid))
+        if (!Guid.TryParse(id, out Guid parsedId))
         {
-            return BadRequest("Invalid ID format.");
+            return BadRequest("Invalid ID format");
         }
-        var shake = await _context.MenuShakes.Find(p => p.ID == guid).FirstOrDefaultAsync();
+
+        var shake = await _context.MenuShakes.Find(p => p.ID == parsedId).FirstOrDefaultAsync();
 
         if (shake == null)
         {
             return NotFound();
         }
 
-        await _context.MenuShakes.ReplaceOneAsync(p => p.ID ==guid, shakeIn);
+        // Update the shake document
+        await _context.MenuShakes.ReplaceOneAsync(p => p.ID == parsedId, shakeIn);
 
         return NoContent();
     }
@@ -70,18 +74,20 @@ public class MenuShakeController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(string id)
     {
-        if (!Guid.TryParse(id, out Guid guid))
+        if (!Guid.TryParse(id, out Guid parsedId))
         {
-            return BadRequest("Invalid ID format.");
+            return BadRequest("Invalid ID format");
         }
-        var shake = await _context.MenuShakes.Find(p => p.ID == guid).FirstOrDefaultAsync();
+
+        var shake = await _context.MenuShakes.Find(p => p.ID == parsedId).FirstOrDefaultAsync();
 
         if (shake == null)
         {
             return NotFound();
         }
 
-        await _context.MenuShakes.DeleteOneAsync(p => p.ID == guid);
+        // Delete the shake document
+        await _context.MenuShakes.DeleteOneAsync(p => p.ID == parsedId);
 
         return NoContent();
     }

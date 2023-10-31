@@ -18,7 +18,7 @@ namespace Rebar.Controllers
             menu.AddShake("Vanilla Shake", "Classic vanilla flavor", 22, 25, 30);
             menu.AddShake("Shoko Shake", "Classic shoko flavor", 21, 24, 29);
         }
-        [HttpGet()]
+       
         /* public string Index()
          {
              return "hii";
@@ -75,7 +75,6 @@ namespace Rebar.Controllers
 
             // Calculate the time taken to process the order
             TimeSpan orderProcessingTime = orderProcessedTime - orderReceivedTime;
-
 
             return Ok(newOrder); // Return the created order or save it in the database
         }
