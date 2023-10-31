@@ -1,0 +1,20 @@
+﻿using Rebar.Model;
+using static Rebar.Model.MenuShake;
+
+namespace Rebar.Models
+{
+    public class OrderShake
+    {
+        public MenuShake OrderedShake { get; set; }
+        public ShakeSize OrderedSize { get; set; }
+        public decimal Price { get; set; }
+
+        public OrderShake(MenuShake shake, ShakeSize size)
+        {
+            OrderedShake = shake;
+            OrderedSize = size;
+            Price = shake.GetPrice(size); // Calculate the price based on the Shake and its size
+        }
+
+    }
+}
