@@ -1,40 +1,89 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Rebar.Model;
-using Rebar.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Rebar.Data;
-using System.Linq;
-namespace Rebar.Controllers
+using Rebar.Models;
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Rebar.Data;
+using Rebar.Model;
+
+[ApiController]
+[Route("api/[controller]")]
+public class OrderCRUDController : ControllerBase
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class SaveOrderController : ControllerBase
+    private readonly MongoDBContext _context;
+
+    public OrderCRUDController(MongoDBContext context)
     {
-        private readonly MongoDBContext _context;
+        _context = context;
+    }
 
-        public SaveOrderController(MongoDBContext context)
+    [HttpGet]
+    public async Task<IEnumerable<Order>> Get()
+    {
+        return await _context.Orders.Find(_ => true).ToListAsync();
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Order>> Get(string id)
+    {
+        // Parse the ID string to Guid for comparison
+        if (!Guid.TryParse(id, out Guid parsedId))
         {
-            _context = context;
+            return BadRequest("Invalid ID format");
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrder(Order order)
-        {
-            if (order == null)
-            {
-                return BadRequest("Invalid order details.");
-            }
+        var order = await _context.Orders.Find(p => p.OrderID == parsedId).FirstOrDefaultAsync();
 
-            try
-            {
-                await _context.Orders.InsertOneAsync(order);
-                return CreatedAtRoute(new { id = order.OrderID }, order); // Created response
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Failed to save the order: " + ex.Message); // Handle server error
-            }
+        if (order == null)
+        {
+            return NotFound();
         }
-       
+
+        return order;
+    }
+
+
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(string id, Order orderIn)
+    {
+        if (!Guid.TryParse(id, out Guid parsedId))
+        {
+            return BadRequest("Invalid ID format");
+        }
+
+        var order = await _context.Orders.Find(p => p.OrderID == parsedId).FirstOrDefaultAsync();
+
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        // Update the shake document
+        await _context.Orders.ReplaceOneAsync(p => p.OrderID == parsedId, orderIn);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        if (!Guid.TryParse(id, out Guid parsedId))
+        {
+            return BadRequest("Invalid ID format");
+        }
+
+        var order = await _context.Orders.Find(p => p.OrderID == parsedId).FirstOrDefaultAsync();
+
+        if (order == null)
+        {
+            return NotFound();
+        }
+
+        // Delete the shake document
+        await _context.Orders.DeleteOneAsync(p => p.OrderID == parsedId);
+
+        return NoContent();
     }
 }

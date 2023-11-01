@@ -2,7 +2,7 @@
 {
     public class Menu
     {
-        public List<MenuShake> menuShakes { get; private set; }
+        public List<MenuShake> menuShakes { get; set; }
 
         public Menu()
         {

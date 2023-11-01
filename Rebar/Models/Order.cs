@@ -24,20 +24,11 @@ namespace Rebar.Model
         public DateTime OrderPreparationEndTime { get; set; }
         public List<Discount> DiscountsAndPromotions { get; set; }
 
-        /*public Order()
+         public Order()
         {
-            TotalPrice = CalculateTotalPrice();
+            TotalPrice = 0;
         }
 
-        public decimal CalculateTotalPrice()
-        {
-            decimal totalPrice = 0;
-            foreach (var shake in Shakes)
-            {
-                totalPrice += shake.Price;
-            }
-            return totalPrice;
-        }
-        */
+        
     }
 }

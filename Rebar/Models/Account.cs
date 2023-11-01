@@ -8,19 +8,22 @@ namespace Rebar.Model
         public List<Order> Orders { get; set; }
        
         public decimal TotalOrdersPrice;
-        public Account(List<Order> orders)
+        public Account()
         {
-            Orders = orders;
-            TotalOrdersPrice = calculateTotalOrdersPrice();
+            Orders = new List<Order>();
+            TotalOrdersPrice = 0;
         }
-        public decimal calculateTotalOrdersPrice()
+        public void AddOrderToAcount(Order o)
         {
-            decimal totalOrdersPrice = 0;
-            foreach (var order in Orders)
+            try
             {
-                totalOrdersPrice += order.TotalPrice;
+                Orders.Add(o);
             }
-            return totalOrdersPrice;
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+
+            }
         }
     }
 }

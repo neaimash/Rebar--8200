@@ -16,7 +16,7 @@ namespace Rebar.Data
 
         public IMongoCollection<MenuShake> MenuShakes => _database.GetCollection<MenuShake>("Menu");
         public IMongoCollection<Order> Orders => _database.GetCollection<Order>("Orders");
-     
+        public IMongoCollection<EndDayReport> EndDays => _database.GetCollection<EndDayReport>("EndDays");
 
     }
 }

@@ -20,6 +20,8 @@ builder.Services.AddSingleton<MongoDBContext>(serviceProvider =>
 });
 builder.Services.AddScoped<Menu>();  // Register the Menu service
 
+// Register Account service
+builder.Services.AddScoped<Account>();
 // Add controllers
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen(c =>
