@@ -12,12 +12,12 @@ namespace Rebar.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CombinedOrderController : ControllerBase
+    public class OrderController : ControllerBase
     {
         private readonly MongoDBContext _context;
         private readonly Menu _menu;
 
-        public CombinedOrderController(MongoDBContext context, Menu menu)
+        public OrderController(MongoDBContext context, Menu menu)
         {
             _context = context;
             _menu = menu;
@@ -52,14 +52,21 @@ namespace Rebar.Controllers
             {
                 var shake = _menu.GetShakeByName(createShake.Name);
 
-                if (shake != null && Enum.TryParse<ShakeSize>(createShake.ShakeSize, out ShakeSize size))
+                if (shake != null)
                 {
-                    orderShakes.Add(new OrderShake(shake, size));
-                    totalPrice += shake.GetPrice(size);
+                    if (Enum.TryParse<ShakeSize>(createShake.ShakeSize, out ShakeSize size))
+                    {
+                        orderShakes.Add(new OrderShake(shake, size));
+                        totalPrice += shake.GetPrice(size);
+                    }
+                    else
+                    {
+                        return BadRequest("Invalid ShakeSize.");
+                    }
                 }
                 else
                 {
-                    return BadRequest("Invalid ShakeSize provided.");
+                    return BadRequest("Invalid Shake.");
                 }
             }
 

@@ -47,6 +47,8 @@ public class MenuShakeController : ControllerBase
     public async Task<ActionResult<MenuShake>> Create(MenuShake shake)
     {
         await _context.MenuShakes.InsertOneAsync(shake);
+        var menu = new Menu(); // Assuming a new instance of the menu is created for every request
+        menu.AddMenuShake(shake);
         return CreatedAtRoute(new { id = shake.ID }, shake);
     }
 

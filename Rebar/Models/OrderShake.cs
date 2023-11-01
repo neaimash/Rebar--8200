@@ -5,6 +5,7 @@ namespace Rebar.Models
 {
     public class OrderShake
     {
+        public Guid ID{ get; }= Guid.NewGuid(); // Generate a new unique GUID
         public MenuShake OrderedShake { get; set; }
         public ShakeSize OrderedSize { get; set; }
         public decimal Price { get; set; }
