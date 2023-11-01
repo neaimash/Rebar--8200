@@ -4,9 +4,8 @@ namespace Rebar.ReqestsModels
 {
     public class CreateOrderShake
     {
-
-        public Guid ID { get; set; }
-        public ShakeSize ShakeSize { get; set; }
-
+        public string Name { get; set; }
+        public string ShakeSize { get; set; }
+    
     }
 }

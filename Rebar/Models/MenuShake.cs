@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -22,7 +23,7 @@ namespace Rebar.Model
 
         [BsonElement("PriceLarge")]
         public int PriceLarge { get; set; }
-
+      
         public enum ShakeSize
         {
             Small,

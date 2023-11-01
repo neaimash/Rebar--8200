@@ -8,7 +8,10 @@ namespace Rebar.Models
         public MenuShake OrderedShake { get; set; }
         public ShakeSize OrderedSize { get; set; }
         public decimal Price { get; set; }
-
+        public OrderShake()
+        {
+            
+        }
         public OrderShake(MenuShake shake, ShakeSize size)
         {
             OrderedShake = shake;

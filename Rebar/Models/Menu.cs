@@ -7,8 +7,7 @@
         {
             menuShakes = new List<MenuShake>();
         }
-        // Method to add a new shake to the menu
-        
+        // Method to add a new shake to the menu 
         public void AddShake(string name, string description, int priceSmall, int priceMedium, int priceLarge)
         {
             MenuShake newShake = new MenuShake();
@@ -17,9 +16,14 @@
   
 
         public MenuShake GetShakeByID(Guid shakeID)
-         {
+        {
              return menuShakes.Find(shake => shake.ID == shakeID);
-         }
-       
+        }
+        public MenuShake GetShakeByName(string name)
+        {
+            return menuShakes.Find(shake => shake.Name == name);
+        }
+
+
     }
 }
