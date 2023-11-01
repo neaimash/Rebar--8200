@@ -16,11 +16,14 @@ namespace Rebar.Controllers
     {
         private readonly MongoDBContext _context;
         private readonly Menu _menu;
+        private readonly Account _account; 
 
-        public MenuManagementController(MongoDBContext context, Menu menu)
+
+        public MenuManagementController(MongoDBContext context, Menu menu, Account account)
         {
             _context = context;
             _menu = menu;
+            _account = account;
         }
 
         [HttpPost]
@@ -81,6 +84,9 @@ namespace Rebar.Controllers
             try
             {
                 await _context.Orders.InsertOneAsync(newOrder);
+                // Use the Account service to add the order
+                _account.AddOrderToAcount(newOrder);
+
                 return Ok("Order saved successfully!");
             }
             catch (Exception ex)

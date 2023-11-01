@@ -9,11 +9,11 @@ using Rebar.Model;
 
 [ApiController]
 [Route("api/[controller]")]
-public class OrderCRUDController : ControllerBase
+public class MenuCRUDController : ControllerBase
 {
     private readonly MongoDBContext _context;
 
-    public OrderCRUDController(MongoDBContext context)
+    public MenuCRUDController(MongoDBContext context)
     {
         _context = context;
     }
