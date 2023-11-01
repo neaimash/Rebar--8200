@@ -12,12 +12,12 @@ namespace Rebar.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OrderController : ControllerBase
+    public class MenuManagementController : ControllerBase
     {
         private readonly MongoDBContext _context;
         private readonly Menu _menu;
 
-        public OrderController(MongoDBContext context, Menu menu)
+        public MenuManagementController(MongoDBContext context, Menu menu)
         {
             _context = context;
             _menu = menu;
